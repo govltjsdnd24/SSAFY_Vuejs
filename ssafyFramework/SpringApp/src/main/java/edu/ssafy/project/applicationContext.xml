@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+	
+	<context:component-scan base-package="edu.ssafy.project"></context:component-scan>
+
+
+	<!-- <bean class="edu.ssafy.project.Galaxy24" id="samsung">
+		<constructor-arg index="0" ref="sony"/>
+	</bean>
+	<bean class="edu.ssafy.project.ApplePhone" id="apple">
+		<property name="camera" ref="cannon"/>
+	</bean>
+	
+	<bean class="edu.ssafy.project.Cannon" id="cannon"/>
+	<bean class="edu.ssafy.project.Sony" id="sony"/> -->
+	
+	<!-- aop -->
+	<bean id ="advice" class="edu.ssafy.project.PrintAdvice"></bean>
+	<aop:config>
+		<aop:pointcut id="beforePointCut" expression="execution(* edu.ssafy.project.*.power*(..))" />
+		<aop:pointcut id="afterPointCut" expression="execution(* edu.ssafy.project.*.power*(..))" />
+		<aop:pointcut id="aroundPointCut" expression="execution(* edu.ssafy.project.*.power*(..))" />
+		<aop:pointcut id="returningPointCut" expression="execution(* edu.ssafy.project.*.power*(..))"/>
+		<aop:pointcut id="throwingPointCut" expression="execution(* edu.ssafy.project.*.power*(..))"/>
+		
+		<aop:aspect ref="advice">
+			<aop:before method="printBefore" pointcut-ref="beforePointCut"/>
+			<aop:after method="printAfter" pointcut-ref="afterPointCut"/>
+			<aop:after-returning method="afterReturning" pointcut-ref="returningPointCut" returning="returnObj"/>
+			<aop:after-throwing method="afterThrowing" pointcut-ref="throwingPointCut" throwing="exception"/>
+		</aop:aspect>
+	</aop:config>
+	
+	<!-- <aop:aspectj-autoproxy> </aop:aspectj-autoproxy> -->
+</beans>
