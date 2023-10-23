@@ -25,7 +25,7 @@
 	
 	<context:component-scan base-package="edu.ssafy.spring" />
 	
-	<aop:config>
+	<!-- <aop:config>
 		<aop:pointcut expression="execution(* edu.ssafy.spring..*.sendParamMulti(..)))" id="paramptct"/>
 		
 		<aop:aspect ref="MemberAspect">
@@ -34,6 +34,6 @@
 			<aop:after-returning method="afterReturn" pointcut-ref="paramptct"/>
 			<aop:after-throwing method="afterThrowing" pointcut-ref="paramptct"/>
 		</aop:aspect>
-	</aop:config>
+	</aop:config> -->
 	
 </beans:beans>
