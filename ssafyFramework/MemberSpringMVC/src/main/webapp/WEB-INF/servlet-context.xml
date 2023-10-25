@@ -3,11 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:aop="http://www.springframework.org/schema/aop"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
-		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+		http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
 	<!-- DispatcherServlet Context: defines this servlet's request-processing infrastructure -->
 	
@@ -16,7 +14,8 @@
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving up static resources in the ${webappRoot}/resources directory -->
 	<resources mapping="/resources/**" location="/resources/" />
-
+	<resources mapping="/img/**" location="/WEB-INF/img/" />
+	
 	<!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /WEB-INF/views directory -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
@@ -25,15 +24,33 @@
 	
 	<context:component-scan base-package="edu.ssafy.spring" />
 	
-	<!-- <aop:config>
-		<aop:pointcut expression="execution(* edu.ssafy.spring..*.sendParamMulti(..)))" id="paramptct"/>
-		
-		<aop:aspect ref="MemberAspect">
-			<aop:before method="before" pointcut-ref="paramptct"/>
-			<aop:after method="after" pointcut-ref="paramptct"/>
-			<aop:after-returning method="afterReturn" pointcut-ref="paramptct"/>
-			<aop:after-throwing method="afterThrowing" pointcut-ref="paramptct"/>
-		</aop:aspect>
-	</aop:config> -->
+	<!-- fileupload 멀티파트 리졸버 -->
+	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="5232880"/>
+		<beans:property name="defaultEncoding" value="utf-8"></beans:property>
+	</beans:bean>
+	
+	<!-- filedownload  -->
+	<beans:bean id="filedownload" class="edu.ssafy.spring.util.FileDownload"/>
+	<beans:bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<beans:property name="order" value="0"></beans:property>
+	</beans:bean>
+	
+	<beans:bean id="commonInterceptor" class="edu.ssafy.spring.util.CommonInterceptor"/>
+	<beans:bean id="commonInterceptor2" class="edu.ssafy.spring.util.CommonInterceptor2"/>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/mem/list"/>
+			<beans:ref bean="commonInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/**"/>
+			<exclude-mapping path="/mem/list"/>
+			<beans:ref bean="commonInterceptor2"/>
+		</interceptor>
+	</interceptors>
+	
 	
 </beans:beans>

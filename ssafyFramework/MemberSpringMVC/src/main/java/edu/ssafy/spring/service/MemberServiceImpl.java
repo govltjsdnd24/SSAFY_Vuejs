@@ -1,66 +1,89 @@
 package edu.ssafy.spring.service;
 
-import java.sql.SQLException;
 import java.util.List;
-
-import javax.sql.DataSource;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import edu.ssafy.spring.util.PaggingUtil;
 import edu.ssafy.spring.dto.MemberDto;
 import edu.ssafy.spring.repository.MemberRepository;
+import edu.ssafy.spring.util.PageNavigation;
+
 
 @Service("MemberServiceImpl")
-public class MemberServiceImpl implements MemberService {
-
-	private MemberRepository repository;
+public class MemberServiceImpl implements MemberService{
+	
+private MemberRepository repo;
 	
 	@Autowired
-	public MemberServiceImpl(MemberRepository repository) {
-		this.repository=repository;
-	}
-	
-	@Override
-	public int memberInsert(MemberDto memberDto) throws SQLException {
-		return repository.memberInsert(memberDto);
+	public MemberServiceImpl(@Qualifier("MemberRepositoryMybatis") MemberRepository repo) {
+		this.repo = repo;
 	}
 
 	@Override
-	public List<MemberDto> memberList() throws SQLException {
-		return repository.memberList();
+	public int memberInsert(MemberDto dto) throws Exception {
+		// TODO Auto-generated method stub
+		return repo.memberInsert(dto);
 	}
 
 	@Override
-	public MemberDto memberView(MemberDto memberDto) throws SQLException {
-		return repository.memberView(memberDto);
+	public List<MemberDto> memberList() throws Exception{
+		// TODO Auto-generated method stub
+		return repo.memberList();
 	}
 
 	@Override
-	public int memberUpdate(MemberDto memberDto) throws SQLException {
-		return repository.memberUpdate(memberDto);
+	public MemberDto memberView(MemberDto dto) throws Exception{
+		// TODO Auto-generated method stub
+		return repo.memberView(dto);
 	}
 
 	@Override
-	public int memberDelete(MemberDto memberDto) throws SQLException {
-		return repository.memberDelete(memberDto);
+	public int memberUpdate(MemberDto dto) throws Exception{
+		// TODO Auto-generated method stub
+		return repo.memberUpdate(dto);
 	}
 
 	@Override
-	public MemberDto memberLogin(String username, String userpwd) throws SQLException {
-		return repository.memberLogin(username,userpwd);
+	public boolean login(MemberDto dto) throws Exception {
+		return repo.login(dto)==null?false:true;
 	}
 
 	@Override
-	public int deleteMembers(String[] checkList) throws SQLException {
-		return repository.deleteMembers(checkList);
+	public boolean memberDeletes(String[] ids) throws Exception {
+		MemberDto dto = new MemberDto();
+		for (String id : ids) {
+			dto.setId(id);
+			repo.memberDelete(dto);
+		}
+		return true;
+	}
+	@Override
+	public int memberDelete(MemberDto dto) throws Exception {
+		// TODO Auto-generated method stub
+		return repo.memberDelete(dto);
 	}
 
 	@Override
-	public int idCheck(String userId) throws SQLException {
-		return repository.idCheck(userId);
+	public PageNavigation makePageNavigation(int currentPage, int sizePerPage) throws Exception {
+		int naviSize = PaggingUtil.naviSize;
+		PageNavigation pageNavigation = new PageNavigation();
+		pageNavigation.setCurrentPage(currentPage);
+		pageNavigation.setNaviSize(naviSize);
+		int totalSize = repo.memberCnt();
+		//pageNavigation.setTotalCount(totalSize);
+		int totalPageSize = (totalSize - 1)/sizePerPage + 1;
+		pageNavigation.setTotalPageCount(totalPageSize);
+		pageNavigation.makeNavigator();
+		return pageNavigation;
 	}
 
-
-	
+	@Override
+	public List<MemberDto> memberList(Map<String, Integer> map) throws Exception {
+		// TODO Auto-generated method stub
+		return repo.memberList(map);
+	}
 }

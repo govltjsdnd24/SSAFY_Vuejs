@@ -18,29 +18,7 @@ mark.sky {
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script type="text/javascript">
-				
-				$(function () {
-					$('#check').on('click', function (evt) {
-
-
-						$.ajax({
-							url: '${root}/mem/idcheck',
-							method: 'POST',
-							data: {
-								id: $('#id').val()
-							},
-							dataType: 'json',
-							success: function (data, status, xhr) {
-								alert(data.result);
-							},
-							error: function (err) {
-								console.log(err);
-							}
-						});
-
-					});
-				});
-				
+			
 			</script>
 <title>회원 가입</title>
 </head>
@@ -50,7 +28,8 @@ mark.sky {
 	<div class="container text-center mt-3">
 		<div class="col-lg-4 mx-auto">
 			<jsp:include page="/WEB-INF/views/member/loginheader.jsp"></jsp:include>
-			<form action="${root }/mem/insert" class="text-left mb-3" method="post" id="rform">
+			<form action="${root }/mem/insert" class="text-left mb-3"
+				method="post" id="rform">
 				<h2 class="p-3 mb-3 text-center shadow bg-light">
 					<mark class="sky">회원가입</mark>
 				</h2>

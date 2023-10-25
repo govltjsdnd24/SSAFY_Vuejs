@@ -19,11 +19,11 @@ mark.sky {
 <script type="text/javascript">
 	function pageMove(pg) {
 		document.getElementById("pg").value = pg;
-		document.getElementById("pageform").action = "${root}/mem/listmember";
+		document.getElementById("pageform").action = "${root}/mem/list";
 		document.getElementById("pageform").submit();
 	}
 	function dels() {
-		document.getElementById("dels").action = "${root}/mem/delmembers";
+		document.getElementById("dels").action = "${root}/mem/deletes";
 		document.getElementById("dels").submit();
 	}
 </script>
@@ -73,7 +73,7 @@ mark.sky {
 			<center>
 				<table class="text-center">
 					<tr>
-						<%-- <td>${navigation.navigator }</td> --%>
+						<td>${navigation.navigator }</td>
 					</tr>
 				</table>
 			</center>

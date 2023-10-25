@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="edu.ssafy.spring.repository.BookRepository">
+
+	<insert id="bookRegister" parameterType="bookdto">
+		INSERT INTO book (isbn, author, title, price ,upfile)
+		VALUES (#{isbn}, #{author}, #{title}, #{price}, #{upfile});
+	</insert>
+	
+	<select id="bookList" resultType="bookdto">
+  	SELECT isbn, author, title, price ,upfile FROM book;
+  	</select>
+	
+	<select id="bookListPage" parameterType= "map" resultType="bookdto">
+		SELECT isbn, author, title, price ,upfile 
+		FROM book
+		limit #{currentPage}, #{sizePerPage};
+	</select>
+	
+	<select id="bookView" parameterType="bookdto" resultType="bookdto">
+		SELECT isbn, author, title, price ,upfile FROM book
+		WHERE isbn=#{isbn};
+	</select>
+	
+	<update id="bookUpdate" parameterType="bookdto">
+		UPDATE book SET 
+		author=#{author}, title=#{title}, price=#{price} ,upfile=#{upfile}
+		WHERE isbn=#{isbn};
+	</update>
+	
+	<delete id="bookDelete" parameterType="bookdto">
+		DELETE FROM book 
+		WHERE isbn=#{isbn};
+	</delete>
+
+	<select id="bookCnt" resultType="int">
+		SELECT COUNT(*) AS cnt FROM book;
+	</select>
+
+</mapper>

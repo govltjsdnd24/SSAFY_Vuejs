@@ -44,7 +44,7 @@ mark.sky {
 				</div>
 			</div>
 		</form>
-		<a href="${root}/mem/insert">회원 등록</a>
+		<a href="${root }">회원 등록</a>
 	</div>
 </body>
 </html>
