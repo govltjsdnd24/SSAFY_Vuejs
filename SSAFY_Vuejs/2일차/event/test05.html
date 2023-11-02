@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>05-05</title>
+  </head>
+  <body>
+    <div id="app">
+      <div @contextmenu="ctxStop" style="position: absolute; top: 5px; right: 5px; bottom: 5px; left: 5px">
+        <a href="https://ssafy.com" @click="confirmFB">ssafy</a>
+      </div>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript">
+      const {createApp, ref} = Vue
+      createApp({
+        setup(){
+            const name = ref("");
+            ctxStop = function(e) {
+              e.preventDefault();
+            },
+            confirmFB = function(e) {
+              if (!confirm("싸피로 이동할까요?")) {
+                e.preventDefault();
+              }
+            }
+            return {
+              name,ctxStop,confirmFB
+            }
+          }
+                
+        }).mount("#app")
+
+    </script>
+  </body>
+</html>

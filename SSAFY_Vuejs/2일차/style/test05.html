@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>06-05</title>
+    <style>
+      .buttonColor {
+        background-color: aqua;
+        color: black;
+      }
+      .buttonLayout {
+        text-align: center;
+        width: 120px;
+      }
+      .staticBorder {
+        border: khaki dashed 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <button class="staticBorder" :class="myColor">테스트 버튼</button>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript">
+      const {createApp, ref} = Vue
+      createApp({
+        setup(){
+            const myColor = ref("buttonColor buttonLayout");
+            
+            return {
+              myColor
+            }
+          }
+                
+        }).mount("#app")
+
+    </script>
+  </body>
+</html>
