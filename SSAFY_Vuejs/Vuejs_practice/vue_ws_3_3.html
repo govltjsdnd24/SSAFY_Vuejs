@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      li {
+        padding: 10px;
+        border: 1px solid #ccc;
+        margin: 10px 0;
+        background-color: #f5f5f5;
+      }
+      .cheap {
+        background-color: #e1f7e1;
+      }
+      .expensive {
+        background-color: #f7e1e1;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <div id="app">
+      <h1>다양한 전시 정보</h1>
+      <label for="isActive">전시 중인 정보만 보기</label>
+      <input type="checkbox" id="isActive" v-model="isActive" />
+      <ul>
+        <template v-if="isActive">
+          <template v-for="item in isActiveExhibition" :key="item.name">
+            <li v-if="item.price <= 5000" class="cheap">
+              <h3>{{item.name}}</h3>
+              <p>{{item.loc}}</p>
+              <p>{{item.price}}</p>
+              <p v-if="item.price == 0">무료 전시입니다.</p>
+              <hr />
+            </li>
+            <li v-if="item.price >= 20000" class="expensive">
+              <h3>{{item.name}}</h3>
+              <p>{{item.loc}}</p>
+              <p>{{item.price}}</p>
+              <hr />
+            </li>
+          </template>
+        </template>
+
+        <template v-else>
+          <template v-for="item in arr" :key="item.name">
+            <li v-if="item.price <= 5000" class="cheap">
+              <h3>{{item.name}}</h3>
+              <p>{{item.loc}}</p>
+              <p>{{item.price}}</p>
+              <p v-if="item.price == 0">무료 전시입니다.</p>
+              <hr />
+            </li>
+            <li v-else-if="item.price >= 20000" class="expensive">
+              <h3>{{item.name}}</h3>
+              <p>{{item.loc}}</p>
+              <p>{{item.price}}</p>
+              <hr />
+            </li>
+            <li v-else>
+              <h3>{{item.name}}</h3>
+              <p>{{item.loc}}</p>
+              <p>{{item.price}}</p>
+              <hr />
+            </li>
+          </template>
+        </template>
+      </ul>
+    </div>
+
+    <script>
+      const { createApp, ref, computed } = Vue;
+
+      createApp({
+        setup() {
+          const isActive = ref(false);
+
+          const arr = ref([
+            {
+              name: "무라카미 다카시 : 무라카시좀비",
+              loc: "부산 시립 미술관",
+              price: 1000,
+              isExhibited: true,
+            },
+            {
+              name: "마우라치오 카텔란 개인전",
+              loc: "리움 미술관",
+              price: 30000,
+              isExhibited: true,
+            },
+            { name: "조선백자전", loc: "리움 미술관", price: 30000, isExhibited: true },
+            {
+              name: "한국 실험미술 1960 - 1970",
+              loc: "국립현대미술관",
+              price: 0,
+              isExhibited: true,
+            },
+            {
+              name: "에드워드 호퍼 : 길 위에서",
+              loc: " 서울 시립 미술관",
+              price: 1000,
+              isExhibited: false,
+            },
+            {
+              name: "알렉산더 칼더 x 이우환",
+              loc: "국제갤러리 서울점",
+              price: 15000,
+              isExhibited: false,
+            },
+          ]);
+
+          const isActiveExhibition = computed(() => arr.value.filter((item) => item.isExhibited));
+
+          return {
+            arr,
+            isActiveExhibition,
+            isActive,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>

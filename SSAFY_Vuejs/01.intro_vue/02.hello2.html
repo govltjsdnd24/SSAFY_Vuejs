@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <h1 id="name">제 이름은 {{message.name}} 입니다.</h1>
+      <p>저는 {{message.age}} 살 입니다.</p>
+      <p>연락처 : {{message.phone}}</p>
+    </div>
+
+    <script>
+      const { createApp, ref } = Vue;
+
+      //let model = { message: "Hello Vue JS !!" };
+
+      let app = createApp({
+        setup() {
+          let name = "홍길동";
+          let age = "30";
+          let phone = "010-1234-1234";
+          let message = { name, age, phone };
+
+          console.log(message);
+          console.log(message.value);
+
+          return {
+            message,
+          };
+        },
+      });
+      app.mount("#app");
+    </script>
+  </body>
+</html>

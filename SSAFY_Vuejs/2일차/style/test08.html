@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>06-08</title>
+    <style>
+      .bColor {
+        background-color: aqua;
+        color: black;
+      }
+      .bLayout {
+        text-align: center;
+        width: 120px;
+      }
+      .bBorder {
+        border: khaki dashed 1px;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <button :class="{ bColor:setColor, bLayout:setAlign, bBorder:setBorder }">버튼1</button>
+      <p>
+        <input type="checkbox" v-model="setColor"  />색상<br />
+        <input type="checkbox" v-model="setAlign" value="true" />정렬,크기<br />
+        <input type="checkbox" v-model="setBorder" value="true" />테두리선<br />
+      </p>
+    </div>
+
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script type="text/javascript">
+      const {createApp, ref} = Vue
+      createApp({
+        setup(){
+            const setColor = ref(false);
+            const setAlign = ref(false);
+            const setBorder = ref(false);
+
+            
+            return {
+              setColor,setAlign,setBorder
+            }
+          }
+                
+        }).mount("#app")
+
+    </script>
+
+  </body>
+</html>
