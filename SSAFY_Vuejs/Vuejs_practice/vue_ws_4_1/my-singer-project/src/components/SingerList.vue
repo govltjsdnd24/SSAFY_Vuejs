@@ -11,9 +11,7 @@ const singers = [
 <template>
     <div style="text-align:center">
         <h1> 가수 목록</h1>
-        <div v-for="singer in singers" :key="singer.name">
-            <singer-detail />
-        </div>
+        <singer-detail v-for="singer in singers" :key="singer.name"/>
     </div>  
 </template>
 
